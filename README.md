@@ -1,156 +1,179 @@
-# Website Sitemap Analyzer
+# 🌐 Web Sitemap Analyzer
 
-**BashCraft Web Development Recruitment Task**
+A powerful web application that crawls any website, maps its internal structure, classifies links, detects broken URLs, and generates an exportable sitemap — all from a sleek, modern interface.
 
-A professional web application that crawls a website, discovers internal pages, classifies internal vs external links, detects broken links, and generates a structured, exportable sitemap.
-
-**Primary demonstration target:** https://bashcraftclub.vercel.app/
-
----
-
-## Features
-
-- URL Input with validation and clear error handling
-- Internal page discovery via BFS crawl
-- URL normalization (trailing slashes, hostname casing, fragments)
-- Duplicate and loop prevention using a visited set
-- Internal vs External link classification
-- Broken-link detection (HTTP status + network/timeout errors)
-- Structured sitemap with page title, URL, depth, and link counts
-- Export to JSON and CSV
-- Configurable max pages and max depth
-- Clean, formal, professional UI
+![Next.js](https://img.shields.io/badge/Next.js-15-black?logo=next.js)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.7-3178C6?logo=typescript&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-06B6D4?logo=tailwindcss&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-green)
 
 ---
 
-## Tech Stack
+## ✨ Features
 
-- Framework: Next.js 15 (App Router)
-- Language: TypeScript
-- Styling: Tailwind CSS
-- HTML Parsing: Cheerio
-- Runtime: Node.js (Vercel Serverless)
-- Deployment: Vercel
+- **🔍 Smart Crawling** — BFS-based crawler discovers internal pages up to a configurable depth
+- **🔗 Link Classification** — Automatically separates internal vs. external links
+- **🚨 Broken Link Detection** — Identifies dead links with HTTP status codes and error details
+- **📊 Dashboard Summary** — At-a-glance cards showing pages discovered, link counts, and broken links
+- **📤 Export** — Download results as **JSON** or **CSV** for further analysis
+- **⚙️ Configurable** — Adjust max pages (up to 50) and crawl depth (up to 5)
+- **🎨 Modern UI** — Clean dark-themed interface built with Tailwind CSS
 
 ---
 
-## Prerequisites
+## 🛠️ Tech Stack
 
-- Node.js 18+
+| Layer       | Technology                  |
+|-------------|-----------------------------|
+| Framework   | Next.js 15 (App Router)     |
+| Language    | TypeScript                  |
+| Styling     | Tailwind CSS                |
+| HTML Parser | Cheerio                     |
+| Runtime     | Node.js 18+                 |
+| Deployment  | Vercel (Serverless)         |
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/) 18 or later
 - npm
 
----
-
-## Installation and Setup
+### Installation
 
 ```bash
-git clone <your-repo-url>
-cd website-sitemap-analyzer
+git clone https://github.com/Udaya-Reddy-397/web-sitemap-analyzer.git
+cd web-sitemap-analyzer
 npm install
+```
+
+### Run Locally
+
+```bash
 npm run dev
 ```
 
-Open http://localhost:3000
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
----
+### Build for Production
 
-## How to Use
-
-1. Enter a website URL (default is pre-filled with the BashCraft site).
-2. Optionally adjust Max Pages (default 25) and Max Depth (default 3).
-3. Click Analyze Website.
-4. Review the summary cards, pages table, and broken-links list.
-5. Switch to the Export tab and download JSON or CSV.
-
----
-
-## Architecture and Design Decisions
-
-### Crawling Approach
-Breadth-first search (BFS) using a queue. Each page is fetched with an 8-second timeout. Only internal links (same hostname) are enqueued for further crawling. External links are recorded but never followed.
-
-### URL Normalization
-- Lowercase hostname
-- Remove URL fragments
-- Strip trailing slash (except for the root path)
-This prevents treating variations of the same URL as different pages.
-
-### Duplicate and Loop Handling
-A Set of normalized URLs tracks already-visited pages. Pages already in the set are skipped, eliminating cycles.
-
-### Broken-Link Detection
-After discovering links, the crawler checks HTTP status (and network errors) for internal links. Status >= 400 or network/timeout failures are reported as broken, together with the page on which the link was found.
-
-### Export
-- JSON: Full structured result (pages, broken links, summary)
-- CSV: Flattened page table for easy spreadsheet use
-
-### Known Limitations
-
-| Limitation | Note |
-|------------|------|
-| JavaScript-rendered links | Uses static HTML parsing (Cheerio). Links injected purely by client-side JavaScript are not discovered. The BashCraft site is a React SPA, so many navigation links may not appear in the initial HTML. |
-| Serverless time limits | On Vercel Hobby plan the maximum function duration is limited. The app caps pages/depth to stay within safe limits. |
-| No robots.txt | Not implemented (optional enhancement). |
-| Sequential requests | Requests are sequential to be polite and avoid rate limits. |
-
----
-
-## BashCraft Demonstration
-
-- URL used: https://bashcraftclub.vercel.app/
-- The analyzer was tested against this site.
-- Because the site is a client-side rendered React application, the number of discoverable static links is limited. This is an expected limitation of static crawlers and is clearly documented.
-
----
-
-## Testing Notes
-
-| Test Case | Expected | Actual |
-|-----------|----------|--------|
-| Valid URL (BashCraft) | Returns pages + summary | Pass |
-| Invalid URL format | Clear 400 error | Pass |
-| Unreachable host | Error / broken status | Pass |
-| Max pages limit | Stops at configured limit | Pass |
-| Circular links | No infinite loop | Pass |
-| Export JSON/CSV | Downloads correctly | Pass |
-| Missing title | Shows "(No title)" | Pass |
-
----
-
-## Project Structure
-
-```
-src/
-  app/
-    api/analyze/route.ts   # Serverless crawl endpoint
-    layout.tsx
-    page.tsx               # Main UI
-    globals.css
-  lib/
-    crawler.ts             # Core crawling + normalization logic
-    types.ts
+```bash
+npm run build
+npm start
 ```
 
 ---
 
-## Deployment on Vercel
+## 📖 Usage
 
-1. Push this repository to GitHub.
-2. Go to vercel.com → Add New Project.
-3. Import the GitHub repository.
-4. Vercel auto-detects Next.js. Click Deploy.
-5. Your live URL will be https://<project-name>.vercel.app
-
-No environment variables are required.
+1. **Enter a URL** — Type any website URL into the input field
+2. **Configure** — Optionally set Max Pages and Max Depth
+3. **Analyze** — Click **"Analyze Website"** and wait for the crawl to complete
+4. **Review** — Browse the results across three tabs:
+   - **Pages & Sitemap** — Table of discovered pages with status, depth, and link counts
+   - **Broken Links** — List of broken/dead links with error details and source pages
+   - **Export** — Download the full report as JSON or CSV
 
 ---
 
-## Evaluation Criteria Coverage
+## 🏗️ Architecture
 
-- Correct core functionality (crawl, normalize, classify, detect broken links, export)
-- Logical handling of loops, duplicates, and edge cases
-- Clean, readable, maintainable code
-- Complete README + technical documentation
-- Testing notes and limitations documented
-- Ready for Vercel deployment
+### How the Crawler Works
+
+```
+User Input (URL)
+      │
+      ▼
+┌─────────────┐     ┌──────────────────┐     ┌────────────────┐
+│  API Route  │────▶│  BFS Crawler     │────▶│  Link Extractor│
+│  /api/analyze│    │  (Queue-based)   │     │  (Cheerio)     │
+└─────────────┘     └──────────────────┘     └────────────────┘
+                           │                         │
+                           ▼                         ▼
+                    ┌──────────────┐          ┌──────────────┐
+                    │  Broken Link │          │  URL          │
+                    │  Checker     │          │  Normalizer   │
+                    └──────────────┘          └──────────────┘
+                           │
+                           ▼
+                    ┌──────────────┐
+                    │  JSON Result │──▶ Dashboard / Export
+                    └──────────────┘
+```
+
+### Key Design Decisions
+
+- **BFS Traversal** — Pages are crawled breadth-first, ensuring shallow pages are discovered first
+- **URL Normalization** — Lowercases hostnames, strips fragments and trailing slashes to prevent duplicate visits
+- **Cycle Prevention** — A `Set` of visited normalized URLs eliminates infinite loops
+- **Polite Crawling** — Sequential requests with 8-second timeouts avoid overwhelming target servers
+- **Two-Pass Broken Link Check** — Links found during crawling are verified in a second pass for accurate reporting
+
+---
+
+## 📁 Project Structure
+
+```
+├── src/
+│   ├── app/
+│   │   ├── api/analyze/
+│   │   │   └── route.ts        # Serverless API endpoint for crawling
+│   │   ├── globals.css         # Global styles
+│   │   ├── layout.tsx          # Root layout
+│   │   └── page.tsx            # Main UI (input form, results dashboard)
+│   └── lib/
+│       ├── crawler.ts          # Core BFS crawler, URL normalization, link extraction
+│       └── types.ts            # TypeScript interfaces (PageInfo, BrokenLink, CrawlResult)
+├── next.config.ts
+├── tailwind.config.ts
+├── tsconfig.json
+└── package.json
+```
+
+---
+
+## ☁️ Deploy on Vercel
+
+1. Push this repo to GitHub
+2. Go to [vercel.com](https://vercel.com) → **Add New Project**
+3. Import the repository — Vercel auto-detects Next.js
+4. Click **Deploy**
+
+No environment variables required.
+
+---
+
+## ⚠️ Known Limitations
+
+| Limitation | Details |
+|---|---|
+| Client-rendered content | Uses static HTML parsing (Cheerio). Links rendered only via JavaScript won't be discovered. |
+| Serverless timeouts | Vercel Hobby plan has function duration limits. Max pages/depth are capped accordingly. |
+| No `robots.txt` support | The crawler does not check `robots.txt` directives. |
+| Sequential requests | Requests are made sequentially to remain polite and avoid rate limiting. |
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Feel free to open an issue or submit a pull request.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+---
+
+## 📄 License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+---
+
+<p align="center">
+  Built with ❤️ using Next.js, TypeScript & Tailwind CSS
+</p>
