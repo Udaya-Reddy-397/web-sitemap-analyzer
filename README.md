@@ -2,6 +2,10 @@
 
 A powerful web application that crawls any website, maps its internal structure, classifies links, detects broken URLs, and generates an exportable sitemap — all from a sleek, modern interface.
 
+🔗 **Live Demo:** [https://web-sitemap-analyzer.vercel.app/](https://web-sitemap-analyzer.vercel.app/)
+
+> 📄 **README.md contains complete setup and usage instructions.**
+
 ![Next.js](https://img.shields.io/badge/Next.js-15-black?logo=next.js)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.7-3178C6?logo=typescript&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-06B6D4?logo=tailwindcss&logoColor=white)
@@ -177,3 +181,4 @@ This project is open source and available under the [MIT License](LICENSE).
 <p align="center">
   Built with ❤️ using Next.js, TypeScript & Tailwind CSS
 </p>
+
