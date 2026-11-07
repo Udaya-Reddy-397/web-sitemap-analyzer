@@ -1,10 +1,8 @@
 # 🌐 Web Sitemap Analyzer
 
-A powerful web application that crawls any website, maps its internal structure, classifies links, detects broken URLs, and generates an exportable sitemap — all from a sleek, modern interface.
+A powerful web application that crawls any website, maps its internal structure, classifies internal and external links, detects broken URLs, and generates an exportable sitemap — all from a sleek, modern interface.
 
-🔗 **Live Demo:** [https://web-sitemap-analyzer.vercel.app/](https://web-sitemap-analyzer.vercel.app/)
-
-> 📄 **README.md contains complete setup and usage instructions.**
+🔗 **Live Demo:** [web-sitemap-analyzer.vercel.app](https://web-sitemap-analyzer.vercel.app/)
 
 ![Next.js](https://img.shields.io/badge/Next.js-15-black?logo=next.js)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.7-3178C6?logo=typescript&logoColor=white)
@@ -15,53 +13,60 @@ A powerful web application that crawls any website, maps its internal structure,
 
 ## ✨ Features
 
-- **🔍 Smart Crawling** — BFS-based crawler discovers internal pages up to a configurable depth
-- **🔗 Link Classification** — Automatically separates internal vs. external links
-- **🚨 Broken Link Detection** — Identifies dead links with HTTP status codes and error details
-- **📊 Dashboard Summary** — At-a-glance cards showing pages discovered, link counts, and broken links
-- **📤 Export** — Download results as **JSON** or **CSV** for further analysis
-- **⚙️ Configurable** — Adjust max pages (up to 50) and crawl depth (up to 5)
-- **🎨 Modern UI** — Clean dark-themed interface built with Tailwind CSS
+| Feature | Description |
+|---------|-------------|
+| 🔍 Smart Crawling | BFS-based crawler discovers internal pages up to a configurable depth |
+| 🔗 Link Classification | Automatically separates internal vs. external links on each page |
+| 🚨 Broken Link Detection | Identifies dead links with HTTP status codes and error details |
+| 📊 Dashboard Summary | At-a-glance cards showing pages discovered, link counts, and broken links |
+| 📤 Export | Download the full analysis report as **JSON** or **CSV** |
+| ⚙️ Configurable | Adjust max pages (up to 50) and crawl depth (up to 5) |
+| 🎨 Modern UI | Clean dark-themed responsive interface built with Tailwind CSS |
 
 ---
 
 ## 🛠️ Tech Stack
 
-| Layer       | Technology                  |
-|-------------|-----------------------------|
-| Framework   | Next.js 15 (App Router)     |
-| Language    | TypeScript                  |
-| Styling     | Tailwind CSS                |
-| HTML Parser | Cheerio                     |
-| Runtime     | Node.js 18+                 |
-| Deployment  | Vercel (Serverless)         |
+| Layer | Technology |
+|-------|------------|
+| Framework | [Next.js 15](https://nextjs.org/) (App Router) |
+| Language | [TypeScript](https://www.typescriptlang.org/) |
+| Styling | [Tailwind CSS](https://tailwindcss.com/) |
+| HTML Parser | [Cheerio](https://cheerio.js.org/) |
+| Runtime | Node.js 18+ |
+| Deployment | [Vercel](https://vercel.com/) (Serverless) |
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Setup & Installation
 
 ### Prerequisites
 
 - [Node.js](https://nodejs.org/) 18 or later
-- npm
+- npm (comes with Node.js)
 
-### Installation
+### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/Udaya-Reddy-397/web-sitemap-analyzer.git
 cd web-sitemap-analyzer
+```
+
+### 2. Install Dependencies
+
+```bash
 npm install
 ```
 
-### Run Locally
+### 3. Run the Development Server
 
 ```bash
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+The app will be available at [http://localhost:3000](http://localhost:3000).
 
-### Build for Production
+### 4. Build for Production (Optional)
 
 ```bash
 npm run build
@@ -70,21 +75,23 @@ npm start
 
 ---
 
-## 📖 Usage
+## 📖 How to Use
 
-1. **Enter a URL** — Type any website URL into the input field
-2. **Configure** — Optionally set Max Pages and Max Depth
-3. **Analyze** — Click **"Analyze Website"** and wait for the crawl to complete
-4. **Review** — Browse the results across three tabs:
-   - **Pages & Sitemap** — Table of discovered pages with status, depth, and link counts
-   - **Broken Links** — List of broken/dead links with error details and source pages
-   - **Export** — Download the full report as JSON or CSV
+1. Open the app at [web-sitemap-analyzer.vercel.app](https://web-sitemap-analyzer.vercel.app/) or your local server
+2. Enter any website URL into the input field
+3. Optionally adjust **Max Pages** and **Max Depth** settings
+4. Click **"Analyze Website"** and wait for the crawl to complete
+5. Browse the results across three tabs:
+
+| Tab | What It Shows |
+|-----|---------------|
+| **Pages & Sitemap** | Table of all discovered pages with title, status, depth, and link counts |
+| **Broken Links** | List of broken/dead links with error details and the page they were found on |
+| **Export** | Download buttons for the full report in JSON or CSV format |
 
 ---
 
-## 🏗️ Architecture
-
-### How the Crawler Works
+## 🏗️ How It Works
 
 ```
 User Input (URL)
@@ -92,7 +99,7 @@ User Input (URL)
       ▼
 ┌─────────────┐     ┌──────────────────┐     ┌────────────────┐
 │  API Route  │────▶│  BFS Crawler     │────▶│  Link Extractor│
-│  /api/analyze│    │  (Queue-based)   │     │  (Cheerio)     │
+│ /api/analyze│     │  (Queue-based)   │     │  (Cheerio)     │
 └─────────────┘     └──────────────────┘     └────────────────┘
                            │                         │
                            ▼                         ▼
@@ -107,56 +114,64 @@ User Input (URL)
                     └──────────────┘
 ```
 
-### Key Design Decisions
+**Key design decisions:**
 
-- **BFS Traversal** — Pages are crawled breadth-first, ensuring shallow pages are discovered first
+- **BFS Traversal** — Crawls breadth-first so shallow pages are discovered first
 - **URL Normalization** — Lowercases hostnames, strips fragments and trailing slashes to prevent duplicate visits
-- **Cycle Prevention** — A `Set` of visited normalized URLs eliminates infinite loops
-- **Polite Crawling** — Sequential requests with 8-second timeouts avoid overwhelming target servers
-- **Two-Pass Broken Link Check** — Links found during crawling are verified in a second pass for accurate reporting
+- **Cycle Prevention** — A `Set` of visited URLs eliminates infinite loops
+- **Polite Crawling** — Sequential requests with 8-second timeouts to avoid overwhelming target servers
+- **Two-Pass Verification** — Links found during crawling are verified in a second pass for accurate broken link reporting
 
 ---
 
 ## 📁 Project Structure
 
 ```
+web-sitemap-analyzer/
 ├── src/
 │   ├── app/
 │   │   ├── api/analyze/
 │   │   │   └── route.ts        # Serverless API endpoint for crawling
 │   │   ├── globals.css         # Global styles
 │   │   ├── layout.tsx          # Root layout
-│   │   └── page.tsx            # Main UI (input form, results dashboard)
+│   │   └── page.tsx            # Main UI — input form, results dashboard, export
 │   └── lib/
 │       ├── crawler.ts          # Core BFS crawler, URL normalization, link extraction
 │       └── types.ts            # TypeScript interfaces (PageInfo, BrokenLink, CrawlResult)
-├── next.config.ts
-├── tailwind.config.ts
-├── tsconfig.json
-└── package.json
+├── next.config.ts              # Next.js configuration
+├── tailwind.config.ts          # Tailwind CSS configuration
+├── tsconfig.json               # TypeScript configuration
+├── package.json                # Dependencies and scripts
+└── README.md                   # Setup and usage instructions
 ```
 
 ---
 
-## ☁️ Deploy on Vercel
+## ☁️ Deployment
 
-1. Push this repo to GitHub
+The app is deployed on **Vercel** and available at:
+
+👉 [https://web-sitemap-analyzer.vercel.app/](https://web-sitemap-analyzer.vercel.app/)
+
+To deploy your own instance:
+
+1. Fork or push this repo to GitHub
 2. Go to [vercel.com](https://vercel.com) → **Add New Project**
 3. Import the repository — Vercel auto-detects Next.js
 4. Click **Deploy**
 
-No environment variables required.
+No environment variables are required.
 
 ---
 
-## ⚠️ Known Limitations
+## ⚠️ Limitations
 
 | Limitation | Details |
 |---|---|
-| Client-rendered content | Uses static HTML parsing (Cheerio). Links rendered only via JavaScript won't be discovered. |
+| Client-rendered content | Uses static HTML parsing (Cheerio). Links rendered only via client-side JavaScript won't be discovered. |
 | Serverless timeouts | Vercel Hobby plan has function duration limits. Max pages/depth are capped accordingly. |
 | No `robots.txt` support | The crawler does not check `robots.txt` directives. |
-| Sequential requests | Requests are made sequentially to remain polite and avoid rate limiting. |
+| Sequential requests | Requests are made one at a time to remain polite and avoid rate limiting. |
 
 ---
 
@@ -165,9 +180,9 @@ No environment variables required.
 Contributions are welcome! Feel free to open an issue or submit a pull request.
 
 1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
+2. Create your feature branch — `git checkout -b feature/amazing-feature`
+3. Commit your changes — `git commit -m 'Add amazing feature'`
+4. Push to the branch — `git push origin feature/amazing-feature`
 5. Open a Pull Request
 
 ---
@@ -175,10 +190,3 @@ Contributions are welcome! Feel free to open an issue or submit a pull request.
 ## 📄 License
 
 This project is open source and available under the [MIT License](LICENSE).
-
----
-
-<p align="center">
-  Built with ❤️ using Next.js, TypeScript & Tailwind CSS
-</p>
-
