@@ -352,22 +352,7 @@ export default function Home() {
           </section>
         )}
 
-        {/* Footer note */}
-        <footer className="mt-16 pt-8 border-t border-slate-800 text-center text-xs text-slate-500">
-          <p>
-            Built for the BashCraft Web Development Recruitment Task · Deployed
-            on Vercel
-          </p>
-          <p className="mt-1">
-            Primary demonstration target:{" "}
-            <a
-              href="https://bashcraftclub.vercel.app/"
-              className="text-slate-400 hover:text-red-400"
-            >
-              https://bashcraftclub.vercel.app/
-            </a>
-          </p>
-        </footer>
+
       </main>
     </div>
   );
